@@ -20,7 +20,6 @@
             font-family: 'Press Start 2P', cursive;
             color: white;
             overflow: hidden;
-            /* Establece un tamaño base de fuente más manejable para Press Start 2P */
             font-size: 16px; 
         }
         .arcade-screen {
@@ -57,7 +56,6 @@
         }
         .title-arcade {
             font-family: 'Press Start 2P', cursive;
-            /* Tamaño de fuente relativo para PC y tabletas */
             font-size: 2.2rem; 
             color: #ffffff;
             text-shadow: 2.5px 2.5px #fffd8a;
@@ -114,15 +112,18 @@
             transition: transform 2s ease-in-out;
         }
         /* ESTILO GENÉRICO PARA IMAGENES (Avatar) */
-        .image-wrapper.avatar img { /* Selects only the avatar image for specific size */
+        .image-wrapper.avatar img {
             max-width: 175px;
             height: 300px;
             object-fit: contain;
             border-radius: 9px;
         }
+        
+        /* CORRECCIÓN CLAVE: Burbuja de Diálogo */
         .speech-bubble {
             position: absolute;
-            bottom: calc(100% + 15px); /* Movido un poco más arriba */
+            /* Se revierte a la posición original, usando el 80% como referencia */
+            bottom: calc(80% + 5px); 
             left: 50%;
             transform: translateX(-50%);
             background-color: #ffffff;
@@ -135,15 +136,17 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             z-index: 10;
             transition: opacity 0.5s ease-in-out;
-            max-width: 80%; /* Añadido para que no sea demasiado ancho en PC */
-            white-space: normal; /* Permite que el texto se envuelva */
+            /* QUITAR Max-width en PC para que se estire */
+            /* Se mantiene white-space normal para el padding, pero el SPAN lo controla */
+            white-space: normal; 
         }
         .speech-bubble.hidden {
             opacity: 0;
         }
         .speech-bubble span {
             display: inline-block;
-            /* white-space: nowrap; <- ELIMINADO para permitir el salto de línea en móvil */
+            /* CORRECCIÓN CLAVE: Se fuerza el texto a NO saltar de línea para mantener la estética */
+            white-space: nowrap; 
             opacity: 1;
             transition: none;
         }
@@ -197,23 +200,22 @@
         /* Tablets y móviles grandes (768px y abajo) */
         @media (max-width: 768px) {
             .arcade-screen {
-                padding: 20px; /* Aumenta el padding para dar más respiro */
+                padding: 20px;
                 width: 95%;
-                min-height: 450px; /* Asegura un buen espacio vertical */
+                min-height: 400px; 
             }
             .title-arcade {
-                /* El título principal se hace más grande, utilizando vw para escalado */
-                font-size: 5.5vw; 
-                top: 40px; /* Baja un poco el título */
+                font-size: 5vw; /* Ligeramente más pequeño para dar espacio */
+                top: 30px; 
             }
             .image-container {
-                margin-top: 80px; /* Deja más espacio para el título */
-                min-height: 200px; /* Reduce un poco la altura mínima */
+                margin-top: 60px; 
+                min-height: 200px; 
             }
             /* Avatar (17deoctubre.png) */
             .image-wrapper.avatar img {
-                max-width: 150px;
-                height: 250px;
+                max-width: 140px;
+                height: 230px;
             }
             /* Escudo (principiosyvalores.png) */
             .image-wrapper.escudo {
@@ -223,49 +225,48 @@
                 max-width: 90%;
                 transform: scale(0.9); 
             }
-            /* Burbuja de diálogo: Hacemos el texto más grande y la burbuja más prominente */
+            /* Burbuja de diálogo: Ajuste de posición y tamaño de fuente */
             .speech-bubble {
-                font-size: 0.8rem; /* Tamaño de fuente más legible */
-                bottom: calc(100% + 10px);
-                padding: 12px 18px;
-                max-width: 90%;
+                font-size: 0.75rem; /* El tamaño de fuente es crítico para que se estire sin salirse */
+                bottom: calc(100% + 5px); /* Posición corregida para móviles */
+                padding: 10px 15px;
             }
             #playButton {
-                font-size: 0.9rem;
-                padding: 12px 25px;
+                font-size: 0.8rem;
+                padding: 10px 20px;
             }
         }
 
         /* Móviles pequeños (480px y abajo) */
         @media (max-width: 480px) {
             .title-arcade {
-                /* Asegura que el título sea legible incluso en los móviles más pequeños */
-                font-size: 7.5vw; 
+                font-size: 6vw; 
                 top: 20px;
             }
             .arcade-screen {
-                padding: 15px;
-                min-height: 400px;
+                padding: 10px;
+                min-height: 380px;
             }
             /* Avatar */
             .image-wrapper.avatar img {
-                max-width: 100px;
-                height: 180px;
+                max-width: 90px;
+                height: 160px;
             }
             /* Escudo */
             .image-wrapper.escudo img {
-                transform: scale(0.8);
+                transform: scale(0.75);
             }
             .image-container {
-                margin-top: 60px;
+                margin-top: 50px;
             }
             .speech-bubble {
-                font-size: 0.65rem; /* El tamaño de fuente más pequeño pero aún legible */
-                padding: 10px 14px;
+                font-size: 0.55rem; /* Tamaño muy reducido, pero necesario para el NO-WRAP */
+                padding: 8px 12px;
+                bottom: calc(100% + 5px);
             }
             #playButton {
-                font-size: 0.75rem;
-                padding: 10px 20px;
+                font-size: 0.7rem;
+                padding: 8px 16px;
             }
         }
     </style>
@@ -274,7 +275,7 @@
     <div class="arcade-screen">
         <h1 class="title-arcade" id="mainTitle">¡Feliz 17 de octubre!</h1>
         <div class="image-container">
-            </div>
+        </div>
         <button id="playButton">INICIAR</button>
     </div>
     <audio id="marchaAudio" src="marcha.mp3" preload="auto"></audio>
@@ -330,7 +331,6 @@
                 img.src = item.imageSrc;
                 img.alt = item.altText;
                 img.onerror = function() {
-                    // Fallback para imágenes no encontradas
                     this.src = `https://placehold.co/150x150/000000/FFFFFF?text=${item.altText.split(' ')[0]}`;
                 };
                 imageWrapper.appendChild(img);
@@ -385,7 +385,7 @@
                             });
                         }
                     }, 2000);
-                }, 8000); // El tiempo total del audio más la secuencia de inicio
+                }, 8000);
             });
         });
     </script>
